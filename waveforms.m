@@ -32,7 +32,20 @@ U2=fft(u2)/sqrt(Ndata1);       % spectrum of the actual generate multisine%
 figure
 plot(timeVector,u2,'k')
 xlabel('Time (s)')
-
 %% Chirpy - Swept Sine
-a = pi * (fmax - fmin);
-b = 2*pi*fmin
+phaseInit = -90;
+method = 'linear';
+timeVector = 0:1/10e3:T-TSample;
+x = chirp(timeVector, fmin, timeVector(end), fmax, method, phaseInit);
+figure
+plot(timeVector, x);
+xlabel('Time (s)');
+ylabel('u(t)');
+
+%% Square Sweep
+timeVector = 0:1/10e3:T-TSample; % time samples in seconds
+amplitude = 1 ;
+chirpsignal = chirp(timeVector, fmin, timeVector(end), fmax)*amplitude;
+squarechirpsignal = sign(chirpsignal)*amplitude;
+% Plot the timeseries
+plot(timeVector,squarechirpsignal,'r-');
