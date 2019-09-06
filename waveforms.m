@@ -1,4 +1,4 @@
-%Daniel Pereira da Costa
+% Daniel Pereira da Costa
 clc;
 clear;
 close all;
@@ -21,31 +21,53 @@ end
 
 %% Generate de Multisine
 ExcitationLines=1+floor((fmin/fSample)*Ndata1:(fmax/fSample)*Ndata1);
-% ExcitationLines=1+floor([fmin*100:fmax*100]); 
-U=zeros(Ndata1 ,1);            % choose random phases
+U=zeros(1e6 ,1);            % initizalize the spectrum
 U((ExcitationLines))=exp(j*2*pi*rand(length(ExcitationLines),1));
 
-u2=2*real(ifft(U));
-u2=u2/std(u2);  %A foi omitido para a realização do primeiro teste. 
-U2=fft(u2)/sqrt(Ndata1);       % spectrum of the actual generate multisine% 
-% % % % plot the results
+aux=2*real(ifft(U));
+u=aux/std(aux); 
+U2=fft(u)/sqrt(Ndata1);       % spectrum of the actual generate multisine% 
+% Plot the results
+u_trunc = u(1:65835);
 figure
-plot(timeVector,u2,'k')
+plot(u_trunc)
+hold on
+plot(u)
+
+% plot(timeVector2,u2,'k')
+legend('u_{trunc}','u2')
 xlabel('Time (s)')
+
+figure(2)
+ut_trunc = timetable(u_trunc,'SamplingRate',fSample);
+ut = timetable(u,'SamplingRate', fSample);
+pspectrum(ut_trunc)
+hold on
+pspectrum(ut)
+legend('ut_{trunc}', 'ut')
+
+figure(3)
+histogram(u_trunc,50);
+hold on;
+histogram(u,50, 'FaceColor', 'red')
+legend('u_{trunc}','u')
 %% Chirpy - Swept Sine
-phaseInit = -90;
-method = 'linear';
-timeVector = 0:1/10e3:T-TSample;
-x = chirp(timeVector, fmin, timeVector(end), fmax, method, phaseInit);
+
+chirpsignal = chirp(timeVector, fmin, timeVector(end), fmax);
 figure
-plot(timeVector, x);
+plot(timeVector, chirpsignal);
 xlabel('Time (s)');
 ylabel('u(t)');
 
+figure
+% xt = timetable(x,'SamplingRate', fSample);
+pspectrum(chirpsignal);
+legend('x');
+
+
 %% Square Sweep
-timeVector = 0:1/10e3:T-TSample; % time samples in seconds
 amplitude = 1 ;
-chirpsignal = chirp(timeVector, fmin, timeVector(end), fmax)*amplitude;
-squarechirpsignal = sign(chirpsignal)*amplitude;
+chirpsignal2 = chirp(timeVector, fmin, timeVector(end), fmax)*amplitude;
+squarechirpsignal = sign(chirpsignal2)*amplitude;
 % Plot the timeseries
 plot(timeVector,squarechirpsignal,'r-');
