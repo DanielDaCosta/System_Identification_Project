@@ -4,11 +4,13 @@ The present work aims the application of artificial neural networks in the ident
 
 ## Contents:
 
-### waveform.m
+### Sampling Period
+
+#### waveform.m
 
 Building excitation signals: Multisine, Chirpy(Swept Sine) and Square Sweep
 
-### tek007.m - tek0016.m
+#### tek007.m - tek0016.m
 
 Choosing the ideal sampling period for each of the following signals:
 - tek0007.csv - Chirp - Só Gerador e Amp - 20mVpp - 900 A 1350kHz 100MS OK
