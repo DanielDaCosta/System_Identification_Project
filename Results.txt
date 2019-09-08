@@ -1,0 +1,16 @@
+- tek0007.csv - Chirp - Só Gerador e Amp - 20mVpp - 900 A 1350kHz 100MS: 
+	Antigo Sample Interval:  1e-8 -> 100Mhz
+	Sample Interval calculado: 2.5e-8 -> 40MHz
+
+- tek0008.csv - Chirp - Só Gerador e Amp - 80mVpp - 900 A 1350kHz 100MS:
+	Antigo Sample Interval:  1e-8 -> 100Mhz
+        Sample Interval calculado: 2.5e-8 -> 40MHz
+
+- tek0009.csv - Chirp - 20mVpp - 900 A 1350kHz 100MS:
+	Antigo Sample Interval:  1e-8 -> 100Mhz
+        Sample Interval calculado: 1.4e-8  -> 71MHz
+
+- tek0010.csv - Chirp - 20mVpp - 900 A 1350kHz 100MS:
+        Antigo Sample Interval:  1e-8 -> 100Mhz
+        Sample Interval calculado: 1.35e-8  -> 74MHz
+

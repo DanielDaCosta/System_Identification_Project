@@ -33,10 +33,10 @@ AMP = tbl.AMP';
 PIEZO = tbl.PIEZO';
 
 %% Choosing the sampling period
-timeVector = TIME(end/4:(end/2+4*end/10));
-PIEZO_trunc = PIEZO(end/4:(end/2+4*end/10));
-GER_trunc = GER(end/4:(end/2+4*end/10));
-AMP_trunc = AMP(end/4:(end/2+4*end/10));
+timeVector = TIME(1:(end/2+5e6));
+PIEZO_trunc = PIEZO(1:(end/2+5e6));
+GER_trunc = GER(1:(end/2+5e6));
+AMP_trunc = AMP(1:(end/2+5e6));
 
 %% Linear Autocorrelation
 [r, lags] = autocorr(PIEZO_trunc,'NumLags',length(timeVector)-2);
