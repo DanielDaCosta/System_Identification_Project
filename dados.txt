@@ -1,0 +1,27 @@
+tek0000.csv - Multisine - Só Gerador e Amp- 20mVpp - 10KhZ OK
+tek0001.csv - Multisine - Só Gerador e Amp - 50mVpp - 10KhZ OK
+tek0002.csv - Multisine - Só Gerador e Amp - 80mVpp - 10KhZ OK
+tek0003.csv - Multisine - 20mVpp (ERRADO, distância das placas diferente de 100mm)
+tek0004.csv - Multisine - 20mVpp - 10KhZ OK
+tek0005.csv - Multisine - 50mVpp - 10KhZ OK
+tek0006.csv - Multisine - 80mVpp - 10KhZ OK
+tek0007.csv - Chirp - Só Gerador e Amp - 20mVpp - 900 A 1350kHz 100MS OK
+tek0008.csv - Chirp - Só Gerador e Amp - 80mVpp - 900 A 1350kHz 100MS OK
+tek0009.csv - Chirp - 20mVpp - 900 A 1350kHz 100MS OK
+tek0010.csv - Chirp - 80mVpp - 900 A 1350kHz 100MS 
+tek0011.csv - Square Sweep - Só Gerador e Amp - 20mVpp - 900 A 1350kHz 100MS OK
+tek0012.csv - Square Sweep - Só Gerador e Amp - 80mVpp - 900 A 1350kHz 100MS OK
+tek0013.csv - Square Sweep - 20mVpp - 900 A 1350kHz 100MS OK
+tek0014.csv - Square Sweep - 80mVpp - 900 A 1350kHz 100MS OK
+tek0015.csv - Multisine - 20mVpp - 10KhZ (5k pontos - u2) OK
+????? tek0005.csv - Multisine - 50mVpp - 10KhZ (5k pontos - u2) OK
+tek0016.csv - Multisine - 50mVpp - 10KhZ (5k pontos - u2 500ms) OK
+tek0017.csv - Multisine - 20mVpp - 10KhZ (5k pontos - u3 100ms) (CLIPPING)
+tek0018.csv - Multisine - 20mVpp - 10KhZ (5k pontos - u3 100ms) OK (Fazendo barulho)
+
+
+ATENÇÃO: AS PROBES PARA O CANAL 2 E 3 ESTAVAM SETADAS PARA 10X
+O GANHO DO CH2 ERA DE 1X
+O GANHO DO CH3 ERA DE 10X
+
+LOGO O CANAL 2 DEVE SER MULTIPLICADO POR 10
