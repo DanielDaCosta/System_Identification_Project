@@ -17,4 +17,4 @@ Choosing the ideal sampling period for each of the following signals:
 - tek0010.csv - Chirp - 80mVpp - 900 A 1350kHz 100MS 
 - tek0016.csv - Multisine - 50mVpp - 10KhZ (5k pontos - u2 500ms) OK
 
-The method used was based on Luis A. Aguirre work: https://arxiv.org/pdf/1907.06803.pdf
+The used method was based on Luis A. Aguirre' work: https://arxiv.org/pdf/1907.06803.pdf
