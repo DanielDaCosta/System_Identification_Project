@@ -12,7 +12,7 @@ close all;
 opts = delimitedTextImportOptions("NumVariables", 4);
 
 % Specify range and delimiter
-opts.DataLines = [22, 5000000];
+opts.DataLines = [22, 10000022];
 opts.Delimiter = ",";
 
 % Specify column names and types
@@ -30,7 +30,7 @@ TIME = tbl.TIME';
 GER = tbl.GER';
 AMP = tbl.AMP';
 PIEZO = tbl.PIEZO';
-timevector = unique(TIME);
+timevector = unique(TIME); %values are too close. Chosing only differents values.
 PIEZO_trunc = PIEZO(1:length(timevector));
 
 %% Clear temporary variables
@@ -39,7 +39,7 @@ clear opts tbl
 %% Choosing the sampling period
 
 %Linear Autocorrelation
-[r, lags] = xcov(PIEZO_trunc);
+[r, lags] = autocorr(PIEZO_trunc);
 [r_min_linear, index_min_linear] = min(r);
 tau_min = lags(index_min_linear);
 figure
@@ -61,7 +61,7 @@ stem(tau2_min, r2_min_linear, 'linewidth',8)
 legend('r','r_{min}')
 
 %The smallest lag;
-tau_m = min(tau_min, tau2_min);
+tau_m = min(abs(tau_min), abs(tau2_min));
 delta = tau_m/25; %decimation factor. tau*_m shoud be between [10,20] or [5,25]
 
 Ts_reduced = Ts*delta;
