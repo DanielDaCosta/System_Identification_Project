@@ -1,6 +1,6 @@
 %Daniel Pereira da Costa
 
-%Building new models using Chirp signal;
+%Building new models using Chirp signal from June;
 %   tek002 - Chirp 900 a 1350 80MVpp. Sweep time: 100Ms
 
 clc;
@@ -11,7 +11,7 @@ close all;
 opts = delimitedTextImportOptions("NumVariables", 4);
 
 % Specify range and delimiter
-opts.DataLines = [22, 10000000];
+opts.DataLines = [22, 10000022];
 opts.Delimiter = ",";
 
 % Specify column names and types
@@ -31,15 +31,33 @@ GER = tbl.GER';
 AMP = tbl.AMP';
 PIEZO = tbl.PIEZO';
 
-TIME_resampled = resample(TIME,7407,10000); %p/q -> Ts_old/Ts_reduced
-GER_resampled = resample(GER,7407,10000);
-PIEZO_resampled = resample(PIEZO,7407,10000);
-AMP_resampled = resample(AMP,7407,10000);
+%% Choosing the sampling period
+TIME_trunc = TIME(1:(end/2+5e6));
+PIEZO_trunc = PIEZO(1:(end/2+5e6));
+GER_trunc = GER(1:(end/2+5e6));
+AMP_trunc = AMP(1:(end/2+5e6));
+
+%% Plotting
+
+TIME_resampled = resample(TIME_trunc,7407,10000); %p/q -> Ts_old/Ts_reduced
+GER_resampled = resample(GER_trunc,7407,10000);
+PIEZO_resampled = resample(PIEZO_trunc,7407,10000);
+AMP_resampled = resample(AMP_trunc,7407,10000);
 
 figure
+subplot(2,1,1)
 plot(TIME_resampled,PIEZO_resampled);
-hold on 
-plot(TIME,PIEZO);
-legend('Ts_{old}','Ts_{reduced}');
+legend('Ts_{reduced}');
 
+subplot(2,1,2)
+pspectrum(PIEZO_resampled)
+legend('Spectrum_{reduced}');
 
+figure
+subplot(2,1,1)
+plot(TIME_trunc,PIEZO_trunc);
+legend('Ts_{all}');
+
+subplot(2,1,2)
+pspectrum(PIEZO_trunc)
+legend('Spectrum_{all}'); 

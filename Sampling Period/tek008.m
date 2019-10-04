@@ -12,7 +12,7 @@ close all;
 opts = delimitedTextImportOptions("NumVariables", 4);
 
 % Specify range and delimiter
-opts.DataLines = [22, 10000022];
+opts.DataLines = [22, 10000000];
 opts.Delimiter = ",";
 
 % Specify column names and types
@@ -22,7 +22,7 @@ opts.ExtraColumnsRule = "ignore";
 opts.EmptyLineRule = "read";
 
 % Import the data
-tbl = readtable("/Users/danieldacosta/Documents/TCC_Matlab/190801/tek0008.csv", opts);
+tbl = readtable("/Users/danieldacosta/Documents/TCC_Matlab/Sampling Period/190801/tek0008.csv", opts);
 
 
 %% Convert to output type
@@ -33,10 +33,10 @@ AMP = tbl.AMP';
 PIEZO = tbl.PIEZO';
 
 %% Choosing the sampling period
-timeVector = TIME(1:(end/2+5e6));
-PIEZO_trunc = PIEZO(1:(end/2+5e6));
-GER_trunc = GER(1:(end/2+5e6));
-AMP_trunc = AMP(1:(end/2+5e6));
+timeVector = TIME(1:(end/2+end/2));
+PIEZO_trunc = PIEZO(1:(end/2+end/2));
+GER_trunc = GER(1:(end/2+end/2));
+AMP_trunc = AMP(1:(end/2+end/2));
 
 %% Linear Autocorrelation
 [r, lags] = autocorr(PIEZO_trunc,'NumLags',length(timeVector)-2);
@@ -75,3 +75,22 @@ end
     
 Ts_reduced = Ts*delta;
 fSampling = 1/Ts_reduced;
+
+%% Resampling Signal to new Sampling Rate
+Ts_old = 1e-8;
+Ts_reduced = 2.5e-8;
+TIME = tbl.TIME';
+GER = tbl.GER'; 
+AMP = tbl.AMP';
+PIEZO = tbl.PIEZO';
+
+TIME_resampled = unique(resample(TIME,4,10)); %p/q -> Ts_old/Ts_reduced
+GER_resampled = resample(GER,4,10);
+PIEZO_resampled = resample(PIEZO,4,10);
+AMP_resampled = resample(AMP,4,10);
+
+figure
+plot(TIME_resampled,PIEZO_resampled);
+hold on 
+plot(TIME,PIEZO);
+legend('Ts_{old}','Ts_{reduced}')
