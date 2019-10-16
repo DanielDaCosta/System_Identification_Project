@@ -20,3 +20,14 @@ Choosing the ideal sampling period for each of the following signals:
 - tek0016.csv - Multisine - 50mVpp - 10KhZ (5k pontos - u2 500ms) OK
 
 The used method was based on Luis A. Aguirre' work: https://arxiv.org/pdf/1907.06803.pdf
+
+### Model
+
+#### TSample_tek002.m 
+
+Choosing the ideal sampling period for each of the signal:
+- TEK002 - CHIRP 900 A 1350 80 MVPP 100MS
+
+#### newMoldes.m 
+
+Building new model from the chirp input. 
