@@ -24,40 +24,51 @@ opts.EmptyLineRule = "read";
 tbl = readtable("/Users/danieldacosta/Documents/TCC_Matlab/Model/270519/tek0002.csv", opts);
 
 %% Resampling Signal to new Sampling Rate
-Ts_old = 1e-8;
-Ts_reduced = 3e-8;
-TIME = tbl.TIME';
-GER = tbl.GER'; 
-AMP = tbl.AMP';
-PIEZO = tbl.PIEZO';
+Ts_orig = 1e-8;
+Ts_reduced = 1e-7;
+time = tbl.TIME;
+DATA = [tbl.GER tbl.AMP tbl.PIEZO];
 
-%% Choosing the sampling period
-TIME_trunc = TIME(1:(end-1));
-PIEZO_trunc = PIEZO(1:(end-1));
-GER_trunc = GER(1:(end-1));
-AMP_trunc = AMP(1:(end-1));
+% pro algum motivo tem tempos repetidos
+[time1, indtime] = unique(time);
+DATA1 = DATA(indtime,:);
+nans  = any(isnan(DATA1)');
+DATA2 = DATA1(~nans,:); % por algum motivo tinhamos NANs
+time2 = time1(~nans);
 
-%% Plotting
-pq = fix(Ts_old/Ts_reduced *10000);
-TIME_resampled = resample(TIME_trunc,pq,10000); %p/q -> Ts_old/Ts_reduced
-GER_resampled = resample(GER_trunc,pq,10000);
-PIEZO_resampled = resample(PIEZO_trunc,pq,10000);
-AMP_resampled = resample(AMP_trunc,pq,10000);
+[DATAr,timer] = resample(DATA2,time2,1/Ts_reduced,1,1);
+[DATAr2,timer2] = resample(DATA1,time1,1/Ts_orig,1,1); % apenas corrige as amostras nao espacadas igualmente
+
+% Original Data vs. Resample: 
+% 1- vejam que o sinal nao possui uma curva bem definida (dar zoom na 
+% horizontal - x), acredito que isto se deva a resolucao da medicao. seria 
+% interessante comparar com os dados com amplitude maior da nova aquisicao
+figure
+plot(time2,DATA2(:,1),'k-',timer,DATAr(:,1),'b--')
+figure
+plot(time2,DATA2(:,3),'k-',timer,DATAr(:,3),'b--')
 
 figure
-% subplot(2,1,1)
-plot(TIME_resampled,GER_resampled);
-    legend('Ts_{reduced}');
+periodogram(DATAr2(:,[1 3]),[],[],1/Ts_orig)
+legend('u','y')
+figure
+periodogram(DATAr(:,[1 3]),[],[],1/Ts_reduced)
+legend('u','y')
+% algumas frequencias aparecem na saida devido (acredito) as 
+% nao-linearidade
 
-% subplot(2,1,2)
-% pspectrum(GER_resampled)
-% legend('Spectrum_{reduced}');
+%% Filtrar o sinal para a banda de interesse
+[B,A] = butter(5,[0.16 0.3]); % passband in normalized frequency
+figure
+freqz(B,A)
+dataOut = filter(B,A,DATAr);
+figure
+periodogram(dataOut(:,[1 3]),[],[],1/Ts_reduced)
+legend('u','y')
 
 figure
-% subplot(2,1,1)
-plot(TIME_resampled,PIEZO_resampled);
-legend('Ts_{reduced}');
+plot(timer,dataOut(:,1),'k-',timer,DATAr(:,1),'b--')
+figure
+plot(timer,dataOut(:,3),'k-',timer,DATAr(:,3),'b--')
 
-% subplot(2,1,2)
-% pspectrum(PIEZO_trunc)
-% legend('Spectrum_{all}'); 
+z = iddata(dataOut(:,3),dataOut(:,1),Ts_reduced);
