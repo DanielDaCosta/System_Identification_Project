@@ -28,6 +28,18 @@ The used method was based on Luis A. Aguirre' work: https://arxiv.org/pdf/1907.0
 Choosing the ideal sampling period for each of the signal:
 - TEK002 - CHIRP 900 A 1350 80 MVPP 100MS
 
-#### newMoldes.m 
+#### TSample_tek002.m 
+Choosing the ideal sampling period for each of the signal, after filtering it
+- TEK002 - CHIRP 900 A 1350 80 MVPP 100MS
 
-Building new model from the chirp input. 
+#### SignalGenrators.m 
+
+Clearing input and output data. Prepocessing data
+
+#### ModelsInteratively.m
+
+MATLAB script to interate trough a set of ARMAX orders parameters: n_a, n_b and n_c. Generating ARMAX model
+
+#### NARX.m and NarxNetwork.m
+
+Script responsibles for creating narx models with neural network structures
